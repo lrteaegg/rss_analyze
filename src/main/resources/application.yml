@@ -1,0 +1,25 @@
+
+
+rss:
+  url: https://www.bilibili.com/
+  user: 123456
+  password: 123456
+  need-read: 8,56
+
+
+mysql:
+  url: jdbc:mysql://192.168.2.53:3306/cfddns?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+  username: root
+  password: root
+
+
+gpt:
+  url: https://api.openai.com/v1/chat/completions
+  api-key: sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+email:
+  host: smtp.qq.com
+  port: 465
+  username: 123456@qq.com
+  password: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  to: 123456@qq.com
