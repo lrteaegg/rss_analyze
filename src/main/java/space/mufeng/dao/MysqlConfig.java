@@ -16,18 +16,29 @@ public class MysqlConfig {
     }
 
     public static Statement getStatement() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = getConnection();
-        return connection.createStatement();
+        return getConnection().createStatement();
     }
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
         if (connection == null || connection.isClosed()) {
-            connection = null;
-            connection = DriverManager.getConnection(url, username, password);
+            synchronized (MysqlConfig.class) {
+                if (connection == null || connection.isClosed()) {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    connection = DriverManager.getConnection(url, username, password);
+                }
+            }
         }
         return connection;
+    }
+
+    public static void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

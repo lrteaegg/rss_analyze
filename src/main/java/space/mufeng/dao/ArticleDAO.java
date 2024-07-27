@@ -26,7 +26,7 @@ public class ArticleDAO {
     //SELECT * FROM article WHERE created_on_time >= ? AND created_on_time <= ?
     public static final String SELECT_SQL_BY_TIME = "SELECT * FROM article WHERE created_on_time >= ? AND created_on_time <= ?";
 
-    public static final String SELECT_SQL_BY_TIME_AND_TYPE = "SELECT * FROM article WHERE created_on_time >= ? AND created_on_time <= ? AND feed_id = ?";
+    public static final String SELECT_SQL_BY_TIME_AND_TYPE = "SELECT * FROM article WHERE created_on_time >= ? AND feed_id = ?";
 
     private static ArticleDAO instance = null;
 
@@ -183,14 +183,13 @@ public class ArticleDAO {
     /**
      * 获取类型是 t 的今天的文章
      */
-    public List<Article> getTodayArticles(int type) {
+    public List<Article> getTodayArticles(long sendStartTime, int type) {
         try {
             Connection connection = MysqlConfig.getConnection();
 
             PreparedStatement statement = connection.prepareStatement(SELECT_SQL_BY_TIME_AND_TYPE);
-            statement.setLong(1, DateUtil.getTodayStartTime());
-            statement.setLong(2, DateUtil.getTodayEndTime());
-            statement.setInt(3, type);
+            statement.setLong(1, sendStartTime);
+            statement.setInt(2, type);
             ResultSet rs = statement.executeQuery();
             List<Article> articles = new ArrayList<>();
             while (rs.next()) {
